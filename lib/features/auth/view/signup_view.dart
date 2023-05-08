@@ -1,25 +1,26 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/common/rounded_small_button.dart';
-import 'package:twitter_clone/constants/ui_constants.dart';
-import 'package:twitter_clone/features/auth/view/signup_view.dart';
-import 'package:twitter_clone/features/auth/widgets/auth_field.dart';
+import 'package:twitter_clone/common/common.dart';
+import 'package:twitter_clone/constants/constants.dart';
+import 'package:twitter_clone/features/auth/view/login_view.dart';
 import 'package:twitter_clone/theme/theme.dart';
 
-class LoginView extends StatefulWidget {
+import '../widgets/auth_field.dart';
+
+class SignUpView extends StatefulWidget {
   static route() => MaterialPageRoute(builder: (context) {
-        return const LoginView();
+        return const SignUpView();
       });
-  const LoginView({super.key});
+  const SignUpView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
-  final appbar = UIConstants.appbar();
+class _SignUpViewState extends State<SignUpView> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final appbar = UIConstants.appbar();
 
   @override
   void dispose() {
@@ -64,24 +65,25 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 RichText(
                   text: TextSpan(
-                    text: 'Don\'t have an account?',
+                    text: 'Already have an account?',
                     style: const TextStyle(
                       fontSize: 16,
                     ),
                     children: [
                       TextSpan(
-                          text: ' Sign up',
-                          style: const TextStyle(
-                            color: Pallete.blueColor,
-                            fontSize: 16,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.pushReplacement(
-                                context,
-                                SignUpView.route(),
-                              );
-                            })
+                        text: ' Login',
+                        style: const TextStyle(
+                          color: Pallete.blueColor,
+                          fontSize: 16,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushReplacement(
+                              context,
+                              LoginView.route(),
+                            );
+                          },
+                      ),
                     ],
                   ),
                 ),
