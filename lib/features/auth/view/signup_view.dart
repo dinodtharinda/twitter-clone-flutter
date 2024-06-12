@@ -1,31 +1,41 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/common/rounded_small_button.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:twitter_clone/common/common.dart';
 import 'package:twitter_clone/constants/constants.dart';
-import 'package:twitter_clone/features/auth/view/signup_view.dart';
-import 'package:twitter_clone/features/auth/widgets/auth_field.dart';
+import 'package:twitter_clone/features/auth/controller/auth_controller.dart';
+import 'package:twitter_clone/features/auth/view/login_view.dart';
 import 'package:twitter_clone/theme/theme.dart';
 
-class LoginView extends StatefulWidget {
+import '../widgets/auth_field.dart';
+
+class SignUpView extends ConsumerStatefulWidget {
   static route() => MaterialPageRoute(builder: (context) {
-        return const LoginView();
+        return const SignUpView();
       });
-  const LoginView({super.key});
+  const SignUpView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  ConsumerState<SignUpView> createState() => _SignUpViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
-  final appbar = UIConstants.appbar();
+class _SignUpViewState extends ConsumerState<SignUpView> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final appbar = UIConstants.appbar();
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  void onSignUp() {
+    ref.read(authControllerProvider.notifier).signUp(
+        email: emailController.text,
+        password: passwordController.text,
+        context: context);
   }
 
   @override
@@ -55,7 +65,9 @@ class _LoginViewState extends State<LoginView> {
                 Align(
                   alignment: Alignment.topRight,
                   child: RoundedSmallButton(
-                    onTap: () {},
+                    onTap: () {
+                      onSignUp();
+                    },
                     label: 'Done',
                   ),
                 ),
@@ -64,26 +76,26 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 RichText(
                   text: TextSpan(
-                    text: 'Don\'t have an account?',
+                    text: 'Already have an account?',
                     style: const TextStyle(
                       fontSize: 16,
-                      
                     ),
                     children: [
                       TextSpan(
-                          text: ' Sign up',
-                          style: const TextStyle(
-                            color: Pallete.blueColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.pushReplacement(
-                                context,
-                                SignUpView.route(),
-                              );
-                            })
+                        text: ' Login',
+                        style: const TextStyle(
+                          color: Pallete.blueColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushReplacement(
+                              context,
+                              LoginView.route(),
+                            );
+                          },
+                      ),
                     ],
                   ),
                 ),
